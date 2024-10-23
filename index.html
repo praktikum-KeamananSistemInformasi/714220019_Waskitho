@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Demo</title>
+    <script defer src="app.js"></script>
+
+    <style>
+/* Mengatur margin dasar untuk seluruh halaman */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Label dan Input */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Tombol */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Hasil */
+h2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+#result {
+    padding: 10px;
+    background-color: #e7f3fe;
+    border-left: 4px solid #2196F3;
+    margin-top: 10px;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Encryption and Decryption Demo using Web Crypto API</h1>
+
+    <label for="algorithm">Choose Algorithm:</label>
+    <select id="algorithm">
+        <option value="AES">AES</option>
+        <option value="DES">DES</option>
+        <option value="Blowfish">Blowfish</option>
+        <option value="ChaCha20">ChaCha20</option>
+    </select>
+
+    <label for="mode">Choose Mode:</label>
+    <select id="mode">
+        <option value="CBC">CBC</option>
+        <option value="GCM">GCM</option>
+    </select>
+    
+
+    <label for="message">Message to Encrypt:</label>
+    <input type="text" id="message" placeholder="Enter message">
+
+    <label for="key">Encryption Key:</label>
+    <input type="text" id="key" placeholder="Enter key">
+
+    <button onclick="handleEncryption()">Encrypt</button>
+    <button onclick="handleDecryption()">Decrypt</button>
+
+    <h2>Result:</h2>
+    <p id="result">Your encrypted or decrypted message will appear here.</p>
+</body>
+</html>
