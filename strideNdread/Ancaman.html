@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Threat & Risk Assessment</title>
-  <!-- <link rel="stylesheet" href="/strideNdread/style.css"> -->
-   <style>
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -17,22 +16,20 @@
       overflow-y: auto; /* Mengaktifkan scroll pada body */
     }
     
-    /* Kontainer utama */
     .container {
-      width: 90%; /* Mengatur lebar container */
-      max-width: 800px; /* Mengatur lebar maksimal */
-      margin: 20px auto; /* Tengah-tengahkan container dan beri sedikit jarak dari atas */
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
       padding: 20px;
       background-color: #fff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
     }
     
-    /* Styling tabel */
     #threatTable {
-      width: 100%; /* Lebar penuh sesuai container */
+      width: 100%;
       border-collapse: collapse;
-      overflow-x: auto; /* Scroll jika terlalu lebar */
+      overflow-x: auto;
     }
     
     #threatTable th, #threatTable td {
@@ -50,7 +47,6 @@
       background-color: #f9f9f9;
     }
     
-    /* Atur ulang tabel agar tetap responsif */
     .table-responsive {
       overflow-x: auto;
       max-width: 100%;
@@ -114,7 +110,6 @@
       color: #333;
     }
     
-    /* Styling untuk dropdown */
     .custom-select, select.form-control {
       width: 100%;
       padding: 10px;
@@ -123,16 +118,6 @@
       border: 1px solid #ddd;
       border-radius: 4px;
       background-color: #f9f9f9;
-    }
-    
-    .custom-select:hover, select.form-control:hover {
-      border-color: #888;
-    }
-    
-    .custom-select:focus, select.form-control:focus {
-      border-color: #4CAF50;
-      outline: none;
-      box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);
     }
     
     .high-priority {
@@ -158,7 +143,7 @@
       padding: 8px;
     }
     
-   </style>
+  </style>
 </head>
 <body>
 
@@ -169,7 +154,7 @@
           <option value="">Pilih asset</option>
           <option value="Server Aplikasi Web">Server Aplikasi Web</option>
           <option value="Database Utama">Database Utama</option>
-          <option value="Server API Eksternal">Server API Eksternal</option>
+          <option value ="Server API Eksternal">Server API Eksternal</option>
           <option value="Data Pengguna">Data Pengguna</option>
           <option value="Jaringan Internal">Jaringan Internal</option>
           <option value="Aplikasi Mobile">Aplikasi Mobile</option>
@@ -188,6 +173,7 @@
             <option value="Repudiation">Repudiation</option>
           </select>
         </div>
+        <th>Threat</th>
         <div id="threatDescription" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px; background-color: #f9f9f9;"></div>
         <div id="caseExample" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px; background-color: #f9f9f9;"></div>
       <div class="input-group">
@@ -212,10 +198,10 @@
       </div>
       <button type="button" onclick="addThreat()">Add Threat</button>
 
-
     </form>
 
-    <h2>Threats List</h2>      <button  onclick="location.href='../index.html'" >Back to Main Menu</button>
+    <h2>Threats List</h2>
+    <button onclick="location.href='../index.html'">Back to Main Menu</button>
     <div class="table-responsive">
         <table id="threatTable">
           <thead>
@@ -229,17 +215,20 @@
               <th>Discoverability</th>
               <th>Total Score</th>
               <th>Prioritas</th>
-              <th>Mitigasi</th> <!-- Kolom Mitigasi -->
+              <th>Mitigasi</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody id="threatTableBody"></tbody>
         </table>
       </div>
     </div>
+
   <script>
+    let threats = JSON.parse(localStorage.getItem("threats")) || [];
+
     function getMitigation(threat, totalScore) {
       let mitigation;
-    
+
       if (threat === "Tampering") {
         if (totalScore >= 30) {
           mitigation = "Implement encryption and logging to detect and prevent tampering.";
@@ -275,10 +264,10 @@
       } else {
         mitigation = "General mitigation: Review system settings and monitor access controls.";
       }
-    
+
       return mitigation;
     }
-    
+
     function addThreat() {
       const asset = document.getElementById("asset").value;
       const threat = document.getElementById("threat").value;
@@ -287,12 +276,12 @@
       const exploitability = parseInt(document.getElementById("exploitability").value) || 0;
       const affected = parseInt(document.getElementById("affected").value) || 0;
       const discoverability = parseInt(document.getElementById("discoverability").value) || 0;
-      
+
       const totalScore = damage + reproducibility + exploitability + affected + discoverability;
-    
+
       let priority;
       let priorityColor;
-    
+
       if (totalScore >= 30) {
         priority = "Tinggi";
         priorityColor = "high-priority"; // Merah
@@ -303,14 +292,28 @@
         priority = "Rendah";
         priorityColor = "low-priority"; // Hijau
       }
-    
-      // Dapatkan langkah mitigasi berdasarkan jenis ancaman dan skor total
+
       const mitigation = getMitigation(threat, totalScore);
-    
-      // Tambahkan baris ke tabel
-      const tableBody = document.getElementById("threatTable").getElementsByTagName("tbody")[0];
+
+      const newThreat = {
+        asset,
+        threat,
+        damage,
+        reproducibility,
+        exploitability,
+        affected,
+        discoverability,
+        totalScore,
+        priority,
+        mitigation
+      };
+
+      threats.push(newThreat);
+      localStorage.setItem(" threats", JSON.stringify(threats));
+
+      const tableBody = document.getElementById("threatTableBody");
       const newRow = tableBody.insertRow();
-    
+
       newRow.innerHTML = `
         <td>${asset}</td>
         <td>${threat}</td>
@@ -323,24 +326,23 @@
         <td class="${priorityColor}">${priority}</td>
         <td>${mitigation}</td>
       `;
-    
-      // Reset form setelah data ditambahkan
+
       document.getElementById("damage").value = "";
       document.getElementById("reproducibility").value = "";
       document.getElementById("exploitability").value = "";
       document.getElementById("affected").value = "";
       document.getElementById("discoverability").value = "";
     }
-    
+
     function updateThreatDescription() {
       const asset = document.getElementById("asset").value;
       const threat = document.getElementById("threat").value;
       const descriptionBox = document.getElementById("threatDescription");
       const caseExampleBox = document.getElementById("caseExample");
-    
+
       let description;
       let caseExample;
-    
+
       switch (threat) {
         case "Tampering":
           description = "Perusakan melibatkan perubahan yang tidak sah pada data atau sistem, yang berpotensi menyebabkan masalah integritas data.";
@@ -370,10 +372,29 @@
           description = "Select a threat to see its description.";
           caseExample = "";
       }
-    
+
       descriptionBox.innerHTML = description;
       caseExampleBox.innerHTML = caseExample;
     }
+
+    // Load threats from Local Storage when page loads
+    threats.forEach((threat) => {
+      const tableBody = document.getElementById("threatTableBody");
+      const newRow = tableBody.insertRow();
+
+      newRow.innerHTML = `
+        <td>${threat.asset}</td>
+        <td>${threat.threat}</td>
+        <td>${threat.damage}</td>
+        <td>${threat.reproducibility}</td>
+        <td>${threat.exploitability}</td>
+        <td>${threat.affected}</td>
+        <td>${threat.discoverability}</td>
+        <td>${threat.totalScore}</td>
+        <td class="${threat.priorityColor}">${threat.priority}</td>
+        <td>${threat.mitigation}</td>
+      `;
+    });
   </script>
 </body>
 </html>
