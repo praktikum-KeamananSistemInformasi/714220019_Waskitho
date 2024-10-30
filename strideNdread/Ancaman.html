@@ -4,7 +4,161 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Threat & Risk Assessment</title>
-  <link rel="stylesheet" href="/strideNdread/style.css">
+  <!-- <link rel="stylesheet" href="/strideNdread/style.css"> -->
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f9;
+      overflow-y: auto; /* Mengaktifkan scroll pada body */
+    }
+    
+    /* Kontainer utama */
+    .container {
+      width: 90%; /* Mengatur lebar container */
+      max-width: 800px; /* Mengatur lebar maksimal */
+      margin: 20px auto; /* Tengah-tengahkan container dan beri sedikit jarak dari atas */
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    /* Styling tabel */
+    #threatTable {
+      width: 100%; /* Lebar penuh sesuai container */
+      border-collapse: collapse;
+      overflow-x: auto; /* Scroll jika terlalu lebar */
+    }
+    
+    #threatTable th, #threatTable td {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    
+    #threatTable th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+    
+    #threatTable tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    /* Atur ulang tabel agar tetap responsif */
+    .table-responsive {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    
+    .input-group {
+      margin: 10px 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    
+    input[type="text"], input[type="number"], select.custom-select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+    
+    /* Styling untuk dropdown */
+    .custom-select, select.form-control {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+    
+    .custom-select:hover, select.form-control:hover {
+      border-color: #888;
+    }
+    
+    .custom-select:focus, select.form-control:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);
+    }
+    
+    .high-priority {
+      background-color: #ffcccc; /* Merah muda */
+      color: #d9534f; /* Merah tua */
+      font-weight: bold;
+    }
+    
+    .medium-priority {
+      background-color: #fff3cd; /* Kuning */
+      color: #856404; /* Kuning tua */
+      font-weight: bold;
+    }
+    
+    .low-priority {
+      background-color: #d4edda; /* Hijau muda */
+      color: #155724; /* Hijau tua */
+      font-weight: bold;
+    }
+    
+    #threatTable td {
+      vertical-align: top;
+      padding: 8px;
+    }
+    
+   </style>
 </head>
 <body>
 
@@ -53,8 +207,11 @@
         <input type="number" id="discoverability" min="1" max="10" required>
       </div>
       <button type="button" onclick="addThreat()">Add Threat</button>
+
+
     </form>
-    <h2>Threats List</h2>
+
+    <h2>Threats List</h2>      <button  onclick="location.href='../index.html'" >Back to Main Menu</button>
     <div class="table-responsive">
         <table id="threatTable">
           <thead>
@@ -75,6 +232,102 @@
         </table>
       </div>
     </div>
-  <script src="script.js"></script>
+  <script>
+    function getMitigation(threat, totalScore) {
+      let mitigation;
+    
+      if (threat === "Tampering") {
+        if (totalScore >= 30) {
+          mitigation = "Implement encryption and logging to detect and prevent tampering.";
+        } else if (totalScore >= 20) {
+          mitigation = "Regularly monitor and update access control mechanisms.";
+        } else {
+          mitigation = "Use checksum or hash functions to verify data integrity periodically.";
+        }
+      } else if (threat === "Information Disclosure") {
+        if (totalScore >= 30) {
+          mitigation = "Use strong encryption and implement access controls to protect sensitive information.";
+        } else if (totalScore >= 20) {
+          mitigation = "Restrict access to sensitive data and log access requests.";
+        } else {
+          mitigation = "Ensure data is not exposed by default and limit access as needed.";
+        }
+      } else if (threat === "Spoofing") {
+        if (totalScore >= 30) {
+          mitigation = "Implement multi-factor authentication and strict identity validation.";
+        } else if (totalScore >= 20) {
+          mitigation = "Use secure channels and certificate-based authentication.";
+        } else {
+          mitigation = "Regularly update passwords and use anti-spoofing measures.";
+        }
+      } else if (threat === "Elevation of Privilege") {
+        if (totalScore >= 30) {
+          mitigation = "Limit privileged access, implement least privilege principle, and monitor privilege escalations.";
+        } else if (totalScore >= 20) {
+          mitigation = "Regularly review and update privilege settings.";
+        } else {
+          mitigation = "Educate users on privilege policies and review permissions periodically.";
+        }
+      } else {
+        mitigation = "General mitigation: Review system settings and monitor access controls.";
+      }
+    
+      return mitigation;
+    }
+    
+    function addThreat() {
+      const asset = document.getElementById("asset").value;
+      const threat = document.getElementById("threat").value;
+      const damage = parseInt(document.getElementById("damage").value) || 0;
+      const reproducibility = parseInt(document.getElementById("reproducibility").value) || 0;
+      const exploitability = parseInt(document.getElementById("exploitability").value) || 0;
+      const affected = parseInt(document.getElementById("affected").value) || 0;
+      const discoverability = parseInt(document.getElementById("discoverability").value) || 0;
+      
+      const totalScore = damage + reproducibility + exploitability + affected + discoverability;
+    
+      let priority;
+      let priorityColor;
+    
+      if (totalScore >= 30) {
+        priority = "Tinggi";
+        priorityColor = "high-priority"; // Merah
+      } else if (totalScore >= 20) {
+        priority = "Sedang";
+        priorityColor = "medium-priority"; // Kuning
+      } else {
+        priority = "Rendah";
+        priorityColor = "low-priority"; // Hijau
+      }
+    
+      // Dapatkan langkah mitigasi berdasarkan jenis ancaman dan skor total
+      const mitigation = getMitigation(threat, totalScore);
+    
+      // Tambahkan baris ke tabel
+      const tableBody = document.getElementById("threatTable").getElementsByTagName("tbody")[0];
+      const newRow = tableBody.insertRow();
+    
+      newRow.innerHTML = `
+        <td>${asset}</td>
+        <td>${threat}</td>
+        <td>${damage}</td>
+        <td>${reproducibility}</td>
+        <td>${exploitability}</td>
+        <td>${affected}</td>
+        <td>${discoverability}</td>
+        <td>${totalScore}</td>
+        <td class="${priorityColor}">${priority}</td>
+        <td>${mitigation}</td>
+      `;
+    
+      // Reset form setelah data ditambahkan
+      document.getElementById("damage").value = "";
+      document.getElementById("reproducibility").value = "";
+      document.getElementById("exploitability").value = "";
+      document.getElementById("affected").value = "";
+      document.getElementById("discoverability").value = "";
+    }
+    
+  </script>
 </body>
 </html>
