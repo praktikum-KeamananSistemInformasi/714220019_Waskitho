@@ -1,0 +1,167 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+  }
+  
+  /* Kontainer utama */
+.container {
+    width: 90%; /* Mengatur lebar container */
+    max-width: 800px; /* Mengatur lebar maksimal */
+    margin: 0 auto; /* Tengah-tengahkan container */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Styling tabel */
+  #threatTable {
+    width: 100%; /* Lebar penuh sesuai container */
+    border-collapse: collapse;
+    overflow-x: auto; /* Scroll jika terlalu lebar */
+  }
+  
+  #threatTable th, #threatTable td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  #threatTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  #threatTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Tambahkan aturan overflow pada tabel agar tidak meluap */
+  .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .input-group {
+    margin: 10px 0;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  input[type="text"], input[type="number"], select.custom-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  /* Styling for the dropdown (Threat selection) */
+  .custom-select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  .custom-select:hover {
+    border-color: #888;
+  }
+  
+  .custom-select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);
+  }
+  
+  /* Styling untuk dropdown */
+select.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  .high-priority {
+    background-color: #ffcccc; /* Merah muda */
+    color: #d9534f; /* Merah tua */
+    font-weight: bold;
+  }
+  
+  .medium-priority {
+    background-color: #fff3cd; /* Kuning */
+    color: #856404; /* Kuning tua */
+    font-weight: bold;
+  }
+  
+  .low-priority {
+    background-color: #d4edda; /* Hijau muda */
+    color: #155724; /* Hijau tua */
+    font-weight: bold;
+  }
+  
+  #threatTable td {
+    vertical-align: top;
+    padding: 8px;
+  }
+  
