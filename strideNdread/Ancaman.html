@@ -166,6 +166,7 @@
         <h2>Threat & Risk Assessment</h2>
         <label for="asset">Asset:</label>
         <select id="asset" class="form-control">
+          <option value="">Pilih asset</option>
           <option value="Server Aplikasi Web">Server Aplikasi Web</option>
           <option value="Database Utama">Database Utama</option>
           <option value="Server API Eksternal">Server API Eksternal</option>
@@ -175,17 +176,20 @@
           <option value="Sistem Monitoring">Sistem Monitoring</option>
           <option value="Backup dan Recovery System">Backup dan Recovery System</option>
         </select>
-      <div class="input-group">
-        <label for="threat">Threat:</label>
-        <select id="threat" class="custom-select">
-          <option value="Tampering">Tampering</option>
-          <option value="Denial of Service (DoS)">Denial of Service (DoS)</option>
-          <option value="Information Disclosure">Information Disclosure</option>
-          <option value="Elevation of Privilege">Elevation of Privilege</option>
-          <option value="Spoofing">Spoofing</option>
-          <option value="Repudiation">Repudiation</option>
-        </select>
-      </div>
+        <div class="input-group">
+          <label for="threat">Threat:</label>
+          <select id="threat" class="custom-select" onchange="updateThreatDescription()">
+            <option value="">Pilih Threat</option>
+            <option value="Tampering">Tampering</option>
+            <option value="Denial of Service (DoS)">Denial of Service (DoS)</option>
+            <option value="Information Disclosure">Information Disclosure</option>
+            <option value="Elevation of Privilege">Elevation of Privilege</option>
+            <option value="Spoofing">Spoofing</option>
+            <option value="Repudiation">Repudiation</option>
+          </select>
+        </div>
+        <div id="threatDescription" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px; background-color: #f9f9f9;"></div>
+        <div id="caseExample" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px; background-color: #f9f9f9;"></div>
       <div class="input-group">
         <label for="damage">Damage Potential (1-10):</label>
         <input type="number" id="damage" min="1" max="10" required>
@@ -328,6 +332,48 @@
       document.getElementById("discoverability").value = "";
     }
     
+    function updateThreatDescription() {
+      const asset = document.getElementById("asset").value;
+      const threat = document.getElementById("threat").value;
+      const descriptionBox = document.getElementById("threatDescription");
+      const caseExampleBox = document.getElementById("caseExample");
+    
+      let description;
+      let caseExample;
+    
+      switch (threat) {
+        case "Tampering":
+          description = "Perusakan melibatkan perubahan yang tidak sah pada data atau sistem, yang berpotensi menyebabkan masalah integritas data.";
+          caseExample = ` Seorang penyerang berhasil mengubah data transaksi pada ${asset} untuk mencuri uang dari pengguna.`;
+          break;
+        case "Denial of Service (DoS)":
+          description = "Serangan Denial of Service bertujuan untuk membuat sebuah layanan tidak tersedia bagi pengguna yang dituju, sering kali dengan membanjiri layanan tersebut dengan trafik.";
+          caseExample = ` Penyerang melakukan serangan DoS terhadap ${asset}, menyebabkan aplikasi tidak dapat diakses oleh pengguna.`;
+          break;
+        case "Information Disclosure":
+          description = "Pengungkapan Informasi mengacu pada pemaparan data sensitif kepada pihak yang tidak berwenang.";
+          caseExample = ` Data pengguna yang sensitif pada ${asset} bocor akibat kesalahan konfigurasi server.`;
+          break;
+        case "Elevation of Privilege":
+          description = "Peningkatan Hak Istimewa terjadi ketika pengguna mendapatkan akses yang tidak sah ke sumber daya atau fungsi di luar izin yang seharusnya.";
+          caseExample = ` Seorang pengguna biasa berhasil mendapatkan akses admin pada ${asset} dan melakukan perubahan yang merugikan.`;
+          break;
+        case "Spoofing":
+          description = "Spoofing melibatkan peniruan terhadap pengguna atau perangkat lain untuk mendapatkan akses atau informasi yang tidak sah.";
+          caseExample = ` Penyerang menyamar sebagai administrator untuk mendapatkan akses ke ${asset} dan mencuri data.`;
+          break;
+        case "Repudiation":
+          description = "Penyangkalan mengacu pada kemampuan pengguna untuk menyangkal tindakan mereka, yang mengarah pada kurangnya akuntabilitas.";
+          caseExample = ` Seorang pengguna melakukan tindakan merugikan pada ${asset} dan kemudian menyangkal bahwa mereka melakukannya.`;
+          break;
+        default:
+          description = "Select a threat to see its description.";
+          caseExample = "";
+      }
+    
+      descriptionBox.innerHTML = description;
+      caseExampleBox.innerHTML = caseExample;
+    }
   </script>
 </body>
 </html>
