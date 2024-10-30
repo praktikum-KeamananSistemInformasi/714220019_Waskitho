@@ -4,19 +4,16 @@
   
   body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
     background-color: #f4f4f9;
+    overflow-y: auto; /* Mengaktifkan scroll pada body */
   }
   
   /* Kontainer utama */
-.container {
+  .container {
     width: 90%; /* Mengatur lebar container */
     max-width: 800px; /* Mengatur lebar maksimal */
-    margin: 0 auto; /* Tengah-tengahkan container */
+    margin: 20px auto; /* Tengah-tengahkan container dan beri sedikit jarak dari atas */
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -45,12 +42,11 @@
     background-color: #f9f9f9;
   }
   
-  /* Tambahkan aturan overflow pada tabel agar tidak meluap */
+  /* Atur ulang tabel agar tetap responsif */
   .table-responsive {
     overflow-x: auto;
     max-width: 100%;
   }
-  
   
   h1, h2 {
     text-align: center;
@@ -110,8 +106,8 @@
     color: #333;
   }
   
-  /* Styling for the dropdown (Threat selection) */
-  .custom-select {
+  /* Styling untuk dropdown */
+  .custom-select, select.form-control {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -121,25 +117,14 @@
     background-color: #f9f9f9;
   }
   
-  .custom-select:hover {
+  .custom-select:hover, select.form-control:hover {
     border-color: #888;
   }
   
-  .custom-select:focus {
+  .custom-select:focus, select.form-control:focus {
     border-color: #4CAF50;
     outline: none;
     box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);
-  }
-  
-  /* Styling untuk dropdown */
-select.form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
   }
   
   .high-priority {
