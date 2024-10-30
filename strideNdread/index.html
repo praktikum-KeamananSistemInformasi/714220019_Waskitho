@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelacakan Ancaman dan Penilaian Risiko</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            width: 100%;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Aplikasi Pelacakan Ancaman dan Penilaian Risiko</h1>
+</header>
+
+<div class="container">
+    <h2>Tambah Aset Baru</h2>
+    <form id="assetForm">
+        <div class="form-group">
+            <label for="assetName">Nama Aset:</label>
+            <input type="text" id="assetName" required>
+        </div>
+        <div class="form-group">
+            <label for="assetDesc">Deskripsi:</label>
+            <input type="text" id="assetDesc" required>
+        </div>
+        <div class="form-group">
+            <label for="assetFunction">Fungsi Utama:</label>
+            <input type="text" id="assetFunction" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Tambah Aset</button>
+        </div>
+    </form>
+
+    <h2>Daftar Ancaman</h2>
+    <table id="threatTable">
+        <thead>
+            <tr>
+                <th>Nama Aset</th>
+                <th>Deskripsi Ancaman</th>
+                <th>Tipe Ancaman</th>
+                <th>Skor Risiko (DREAD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data ancaman akan ditambahkan di sini -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const assetForm = document.getElementById('assetForm');
+    const threatTable = document.getElementById('threatTable').querySelector('tbody');
+
+    // Array untuk menyimpan ancaman
+    const threats = [
+        { asset: "Server Aplikasi", description: "Tampering", type: "Manipulasi", dreadScore: 38 },
+        { asset: "Database Utama", description: "Information Disclosure", type: "Kebocoran Data", dreadScore: 37 },
+    ];
+
+    // Fungsi untuk menambah ancaman ke tabel
+    function addThreatToTable() {
+        threatTable.innerHTML = ''; // Kosongkan tabel
+        threats.forEach(threat => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${threat.asset}</td>
+                <td>${threat.description}</td>
+                <td>${threat.type}</td>
+                <td>${threat.dreadScore}</td>
+            `;
+            threatTable.appendChild(row);
+        });
+    }
+
+    // Event listener untuk menambah aset baru dari form
+    assetForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const assetName = document.getElementById('assetName').value;
+        const assetDesc = document.getElementById('assetDesc').value;
+        const assetFunction = document.getElementById('assetFunction').value;
+
+        // Tambahkan aset baru sebagai ancaman ke dalam array threats
+        const newThreat = {
+            asset: assetName,
+            description: assetDesc,
+            type: assetFunction,
+            dreadScore: Math.floor(Math.random() * 50) + 1 // Memberikan skor risiko acak untuk contoh
+        };
+        threats.push(newThreat);
+
+        // Reset form dan update tabel ancaman
+        assetForm.reset();
+        addThreatToTable();
+        alert("Aset berhasil ditambahkan sebagai ancaman!");
+    });
+
+    // Tampilkan ancaman di tabel saat halaman dimuat
+    addThreatToTable();
+</script>
+
+
+</body>
+</html>
